@@ -1576,6 +1576,7 @@
                     body: [
                       "Sections use different grouping and presentation patterns, creating an inconsistent reading experience as users move through the page.",
                     ],
+                    image: "visual-consistency-content-structure.png",
                   },
                   {
                     label: "Feedback & Transitions",
@@ -1873,9 +1874,7 @@
                     .join("")
                 : section.video
                 ? `<div class="section-media"><video src="${section.video}" data-preview-time="${section.previewTime ?? 0.15}" muted loop playsinline preload="auto"></video></div>`
-                : section.hidePlaceholder
-                ? ``
-                : `<div class="section-figure" aria-hidden="true"></div>`
+                : ``
             }
           </section>
         `;
