@@ -1,0 +1,2148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Website Clarity Audit - Crypto12</title>
+    <style>
+      @font-face {
+        font-family: "Unica77";
+        font-weight: 400;
+        src: url("https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2Ftaco7c7bm1m%2Flvp4qhfi7bk%2FUnica77LL-Regular.otf?alt=media&token=a28d818f-2d07-47ba-b83c-852c129affd0")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "Unica77";
+        font-weight: 700;
+        src: url("https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2Ftaco7c7bm1m%2Flvp4qhfi7bk%2FUnica77LL-Bold.otf?alt=media&token=d4ad10c3-f96f-4cef-af34-0654217a0277")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "Unica77 Mono";
+        font-weight: 400;
+        src: url("https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2Ftaco7c7bm1m%2Flvp4qhfi7bk%2FUnica77MonoLL-Regular.otf?alt=media&token=562345a8-ff4a-4ddc-a151-194c856994dd")
+          format("opentype");
+      }
+
+      :root {
+        --sidebar: 296px;
+        --line: rgba(0, 0, 0, 0.1);
+        --muted: rgba(0, 0, 0, 0.56);
+        --paper: #fff;
+        --soft: #f2f2f2;
+        --ink: #050505;
+        --ease: cubic-bezier(0.19, 1, 0.22, 1);
+        --body-copy: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: #fff;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Unica77", sans-serif;
+        line-height: 1.15;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+
+      body.pin-locked {
+        overflow: hidden;
+      }
+
+      button,
+      a {
+        color: inherit;
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+        background: none;
+        cursor: pointer;
+      }
+
+      .mobile-bar {
+        display: none;
+      }
+
+      .pin-gate {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      .pin-gate[hidden] {
+        display: none;
+      }
+
+      .pin-card {
+        width: min(100%, 360px);
+        text-align: center;
+      }
+
+      .pin-title {
+        margin: 0 0 12px;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .pin-copy {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.35;
+      }
+
+      .pin-form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .pin-input {
+        width: 100%;
+        height: 52px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        outline: none;
+        background: #fff;
+        color: var(--ink);
+        font-family: "Unica77 Mono", monospace;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .pin-input:focus {
+        border-color: rgba(0, 0, 0, 0.3);
+      }
+
+      .pin-submit {
+        width: 100%;
+        height: 52px;
+        border: 1px solid #000;
+        background: #000;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .pin-error {
+        min-height: 18px;
+        margin: 0;
+        color: #b42318;
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 20;
+        width: var(--sidebar);
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-right: 1px solid var(--line);
+        overflow: hidden;
+      }
+
+      .sidebar,
+      .sidebar * {
+        font-weight: 400;
+      }
+
+      .brand {
+        height: 96px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 18px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        width: 100%;
+      }
+
+      .brand-logo {
+        display: block;
+        width: 230px;
+        height: 56px;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .mark {
+        width: 25px;
+        height: 25px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+      }
+
+      .mark i {
+        display: block;
+        background: var(--ink);
+      }
+
+      .mark i:nth-child(1) {
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+      }
+
+      .mark i:nth-child(2) {
+        clip-path: polygon(0 0, 100% 0, 0 100%);
+      }
+
+      .mark i:nth-child(3) {
+        clip-path: polygon(0 0, 100% 100%, 0 100%);
+      }
+
+      .mark i:nth-child(4) {
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      }
+
+      .meta {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .meta button,
+      .meta a {
+        display: block;
+        width: 100%;
+        padding: 22px 16px 24px;
+        text-align: left;
+        font-family: "Unica77 Mono", monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+
+      .meta-title {
+        display: block;
+      }
+
+      .meta span {
+        display: block;
+        color: var(--muted);
+      }
+
+      .meta-email {
+        text-transform: lowercase;
+      }
+
+      .nav {
+        flex: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 0;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      .nav-section {
+        border-bottom: 1px solid var(--line);
+        padding: 26px 0;
+      }
+
+      .nav-section:last-child {
+        border-bottom: 0;
+      }
+
+      .nav-section-title {
+        padding: 0 17px 15px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.2;
+      }
+
+      .nav-section .nav-link + .nav-link {
+        margin-top: 10px;
+      }
+
+      .nav-link {
+        width: 100%;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        padding: 0 22px 0 36px;
+        font-size: 16px;
+        line-height: 1.2;
+        text-align: left;
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.46);
+      }
+
+      .nav-link:hover {
+        color: rgba(0, 0, 0, 0.66);
+      }
+
+      .nav-link[aria-current="page"] {
+        color: #000;
+      }
+
+      .site {
+        min-height: 100vh;
+        padding-left: var(--sidebar);
+        outline: none;
+      }
+
+      .site:focus {
+        outline: none;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .home-page {
+        min-height: 100vh;
+      }
+
+      .top-strip {
+        height: 92px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        align-items: start;
+        padding: 58px 32px 112px;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .hero-title {
+        grid-column: 3 / span 3;
+        margin: 0;
+        font-size: clamp(54px, 4.8vw, 78px);
+        line-height: 0.96;
+        font-weight: 400;
+      }
+
+      .hero-title span {
+        display: block;
+        color: var(--muted);
+      }
+
+      .hero-copy {
+        grid-column: 7 / span 4;
+        max-width: 620px;
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .hero-copy p {
+        margin: 0;
+      }
+
+      .hero-copy p + p {
+        margin-top: 20px;
+      }
+
+      .hero-copy-meta {
+        display: block;
+        color: var(--muted);
+      }
+
+      .hero-copy-meta + .hero-copy-meta {
+        margin-top: 8px;
+      }
+
+      .section {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        padding: 24px 32px 96px;
+        border-top: 1px solid var(--line);
+      }
+
+      .visual-intro-section {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .section-label {
+        grid-column: 3 / span 3;
+        margin: 0;
+        font-size: clamp(28px, 2.25vw, 36px);
+        font-weight: 500;
+        line-height: 1.12;
+      }
+
+      .section-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.14em;
+        transition: opacity 140ms ease, transform 140ms ease;
+      }
+
+      .section-link:hover {
+        opacity: 0.72;
+      }
+
+      .section-link-arrow {
+        font-size: 0.9em;
+        line-height: 1;
+        transform: translateY(-0.04em);
+        transition: transform 140ms ease;
+      }
+
+      .section-link:hover .section-link-arrow {
+        transform: translate(2px, -2px);
+      }
+
+      .section-body {
+        grid-column: 7 / span 4;
+        max-width: 620px;
+      }
+
+      .section-body p {
+        margin: 0;
+        font-size: var(--body-copy);
+        line-height: 1.25;
+      }
+
+      .section-body p + p {
+        margin-top: 20px;
+      }
+
+      .section-figure,
+      .section-media {
+        grid-column: 3 / span 8;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        margin-top: 28px;
+      }
+
+      .section-image {
+        grid-column: 3 / span 8;
+        width: 100%;
+        margin-top: 28px;
+      }
+
+      .section-figure {
+        background: #f2f2f2;
+      }
+
+      .section-media {
+        overflow: hidden;
+        background: #f2f2f2;
+      }
+
+      .section-image {
+        display: block;
+        height: auto;
+        object-fit: contain;
+        background: #f2f2f2;
+      }
+
+      .section-media video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .page--detail .section.visual-intro-section .section-body {
+        grid-column: 3 / span 7;
+        max-width: 1180px;
+      }
+
+      .page--detail .section.visual-intro-section .section-body p {
+        font-size: clamp(28px, 2.25vw, 36px);
+        line-height: 1.12;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .principle-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .principle {
+        padding-left: 18px;
+        border-left: 1px solid var(--line);
+      }
+
+      .principle strong {
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .contents-panel {
+        display: grid;
+        gap: 28px;
+      }
+
+      .contents-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      .contents-group-title {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.2;
+        color: var(--muted);
+      }
+
+      .contents-links {
+        display: grid;
+        gap: 8px;
+      }
+
+      .contents-links a {
+        color: rgba(0, 0, 0, 0.78);
+        text-decoration: none;
+        font-size: 21px;
+        line-height: 1.18;
+      }
+
+      .contents-links a:hover {
+        color: #000;
+      }
+
+      .pager {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        min-height: 190px;
+        align-items: stretch;
+        margin-top: auto;
+        padding: 34px 32px 0;
+        background: var(--soft);
+      }
+
+      .pager a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        gap: 24px;
+        padding: 22px 18px 24px;
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.82);
+        background: transparent;
+        transition: color 120ms ease, transform 120ms ease;
+      }
+
+      .pager a:hover {
+        color: #000;
+        transform: translateY(-1px);
+      }
+
+      .pager-prev {
+        grid-column: 1 / span 6;
+        display: flex;
+        min-height: 100%;
+        transition: background-color 120ms ease;
+      }
+
+      .pager-prev a {
+        justify-content: flex-start;
+        padding-left: calc(((100% / 6) * 2) + 18px);
+      }
+
+      .pager-prev:hover {
+        background: rgba(0, 0, 0, 0.035);
+      }
+
+      .pager-next {
+        grid-column: 7 / span 6;
+        display: flex;
+        min-height: 100%;
+        transition: background-color 120ms ease;
+      }
+
+      .pager-next a {
+        justify-content: flex-end;
+        padding-right: calc(((100% / 6) * 2) + 18px);
+      }
+
+      .pager-next:hover {
+        background: rgba(0, 0, 0, 0.035);
+      }
+
+      .pager-arrow {
+        flex: 0 0 auto;
+        font-size: 52px;
+        line-height: 0.9;
+      }
+
+      .pager-copy {
+        display: block;
+        flex: 0 1 auto;
+      }
+
+      .pager-label {
+        display: block;
+        font-size: 40px;
+        line-height: 0.98;
+        font-weight: 400;
+      }
+
+      .footer {
+        min-height: 220px;
+        display: block;
+        background: #000;
+        color: #fff;
+      }
+
+      .footer-main {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 32px;
+        padding: 28px 32px;
+        align-items: start;
+      }
+
+      .footer p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.25;
+      }
+
+      .footer a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .footer .mark i {
+        background: #fff;
+      }
+
+      .footer-version {
+        grid-column: 3 / span 2;
+        color: #fff;
+      }
+
+      .footer-contact {
+        grid-column: 6 / span 2;
+        text-align: center;
+        color: #fff;
+      }
+
+      .footer-email {
+        transition: opacity 140ms ease;
+      }
+
+      .footer-email:hover {
+        opacity: 0.72;
+      }
+
+      .footer-date {
+        grid-column: 9 / span 2;
+        text-align: right;
+        color: #fff;
+      }
+
+      @media (max-width: 900px) {
+        :root {
+          --sidebar: 0px;
+        }
+
+        .mobile-bar {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 16px;
+          background: #fff;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .mobile-bar button {
+          font-family: "Unica77 Mono", monospace;
+          font-size: 12px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .sidebar {
+          width: 88vw;
+          max-width: 330px;
+          transform: translateX(-100%);
+        }
+
+        .sidebar.is-open {
+          transform: translateX(0);
+          box-shadow: 0 0 0 100vw rgba(0, 0, 0, 0.28);
+        }
+
+        .site {
+          padding-left: 0;
+        }
+
+        .hero,
+        .section,
+        .pager,
+        .footer-main {
+          display: block;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        .hero {
+          padding-top: 34px;
+          padding-bottom: 74px;
+        }
+
+        .hero-title {
+          margin-bottom: 28px;
+          font-size: clamp(42px, 11vw, 64px);
+        }
+
+        .hero-copy {
+          max-width: none;
+          font-size: 24px;
+        }
+
+        .contents-links a {
+          font-size: 20px;
+        }
+
+        .section {
+          padding-top: 22px;
+          padding-bottom: 72px;
+        }
+
+        .section-label {
+          margin-bottom: 24px;
+        }
+
+        .section-body {
+          max-width: none;
+        }
+
+        .pager {
+          min-height: auto;
+          padding-top: 24px;
+          padding-bottom: 32px;
+        }
+
+        .pager a {
+          min-height: 112px;
+          gap: 16px;
+          padding: 18px 0 20px;
+        }
+
+        .pager-label {
+          font-size: 32px;
+        }
+
+        .pager-arrow {
+          font-size: 42px;
+        }
+
+        .pager-prev,
+        .pager-next {
+          margin-bottom: 26px;
+        }
+
+        .footer {
+          display: block;
+        }
+
+        .footer-main p {
+          margin-bottom: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body class="pin-locked">
+    <div class="pin-gate" id="pin-gate">
+      <div class="pin-card">
+        <h1 class="pin-title">Enter PIN</h1>
+        <p class="pin-copy">This audit is lightly protected.</p>
+        <form class="pin-form" id="pin-form">
+          <input
+            class="pin-input"
+            id="pin-input"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="PIN"
+          />
+          <button class="pin-submit" type="submit">Continue</button>
+          <p class="pin-error" id="pin-error"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="mobile-bar">
+      <strong>Website Clarity Audit</strong>
+      <button type="button" data-menu>Menu</button>
+    </div>
+
+    <aside class="sidebar" aria-label="Audit navigation">
+      <div class="meta">
+        <button type="button" data-page="home" aria-label="Home">
+          <strong class="meta-title">Website Clarity Audit</strong>
+          <span>Crypto12  /  June 2026</span>
+        </button>
+      </div>
+      <div class="meta">
+        <a href="mailto:petar@petar.studio" aria-label="Email Petar Jovanovic">
+          <span>Petar Jovanovic</span>
+          <span class="meta-email">petar@petar.studio</span>
+        </a>
+      </div>
+
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <main class="site" id="app" tabindex="-1"></main>
+
+    <script>
+      const AUDIT_PIN = "crypto12";
+      const PIN_SESSION_KEY = "crypto12-audit-unlocked";
+      const pinGate = document.querySelector("#pin-gate");
+      const pinForm = document.querySelector("#pin-form");
+      const pinInput = document.querySelector("#pin-input");
+      const pinError = document.querySelector("#pin-error");
+
+      function unlockAudit() {
+        sessionStorage.setItem(PIN_SESSION_KEY, "true");
+        document.body.classList.remove("pin-locked");
+        pinGate.hidden = true;
+      }
+
+      if (sessionStorage.getItem(PIN_SESSION_KEY) === "true") {
+        unlockAudit();
+      } else {
+        pinInput.focus();
+      }
+
+      pinForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (pinInput.value.trim() === AUDIT_PIN) {
+          pinError.textContent = "";
+          unlockAudit();
+          return;
+        }
+
+        pinError.textContent = "Incorrect PIN.";
+        pinInput.select();
+      });
+
+      const findings = [
+        {
+          id: "finding-01",
+          number: "01",
+          title: "Weak Initial Pull & First Impression",
+          nav: "01 Initial Pull",
+          summary:
+            "Hero clarity, hierarchy, relevance signaling, and CTA actionability are not doing enough work in the first screen.",
+          analysis:
+            "The first screen should create immediate orientation. Right now, the page asks the visitor to work too hard before they understand whether the product is relevant, safe, and worth exploring.",
+          recommendation:
+            "Make the hero state what Crypto12 is, who it is for, and why the next action matters. Move one clear trust signal into the first viewport.",
+        },
+        {
+          id: "finding-02",
+          number: "02",
+          title: "Product Relevance Is Unclear And Late",
+          nav: "02 Product Relevance",
+          summary:
+            "The page does not quickly explain what Crypto12 is, who it is for, and why it matters.",
+          analysis:
+            "Relevance has to arrive before detail. If the visitor cannot classify the product quickly, every later section has less persuasive force.",
+          recommendation:
+            "Introduce the product category, audience, and primary use case before premium, education, or company material.",
+        },
+        {
+          id: "finding-03",
+          number: "03",
+          title: "Broken Decision Journey",
+          nav: "03 Decision Journey",
+          summary:
+            "Flow, sequencing, premium positioning, educational content, and About Us placement weaken the decision path.",
+          analysis:
+            "The page has strong pieces, but they do not yet behave like one guided argument. Visitors meet important material before they have the context to value it.",
+          recommendation:
+            "Resequence the page around the buyer decision: relevance first, trust second, value third, then conversion.",
+        },
+        {
+          id: "finding-04",
+          number: "04",
+          title: "Trust Assets Are Underutilized",
+          nav: "04 Trust Assets",
+          summary:
+            "Partners, regulation, credibility signals, and safety material appear too late or too fragmented.",
+          analysis:
+            "Trust exists, but it is not concentrated at the points where skepticism is highest. The result is weaker perceived credibility than the assets deserve.",
+          recommendation:
+            "Group regulatory, partner, and safety proof into a dedicated trust sequence and echo the strongest signal near the hero.",
+        },
+        {
+          id: "finding-05",
+          number: "05",
+          title: "Product Experience Is Poorly Communicated",
+          nav: "05 Product Experience",
+          summary:
+            "The app section and product demonstration do not make the actual product experience easy enough to understand.",
+          analysis:
+            "A product that involves risk, money, or compliance needs visible product proof. Without it, visitors judge mostly from claims and surface polish.",
+          recommendation:
+            "Show the product interface earlier, label what the user can do, and connect product screenshots directly to core benefits.",
+        },
+        {
+          id: "finding-06",
+          number: "06",
+          title: "Unrelated Information Is Grouped Together",
+          nav: "06 Information Grouping",
+          summary:
+            "Regulation, product explanation, trust, and conversion material are mixed in ways that dilute meaning.",
+          analysis:
+            "When unrelated signals share a section, visitors cannot tell what they are supposed to take away. The page feels heavier even when the content is useful.",
+          recommendation:
+            "Separate explanatory, regulatory, product, and conversion sections so each one has a single job.",
+        },
+        {
+          id: "finding-07",
+          number: "07",
+          title: "Value Communication Is Weak",
+          nav: "07 Value Communication",
+          summary:
+            "Pricing, fees, tariffs, PDFs, and the cost-benefit relationship need stronger presentation.",
+          analysis:
+            "Value is not only the price. It is the relationship between cost, effort, perceived risk, and expected outcome.",
+          recommendation:
+            "Move key pricing and fee information out of low-friction PDFs and summarize the economic argument directly on the page.",
+        },
+        {
+          id: "finding-08",
+          number: "08",
+          title: "Weak Final Conversion Path",
+          nav: "08 Final Conversion",
+          summary:
+            "The final CTA hierarchy is diluted by contact content and guide downloads competing with conversion.",
+          analysis:
+            "The end of the page should resolve uncertainty and make the preferred action obvious. Competing final actions create hesitation.",
+          recommendation:
+            "Make one primary final action dominant and move secondary downloads into supporting positions.",
+        },
+        {
+          id: "finding-09",
+          number: "09",
+          title: "Visual Inconsistency",
+          nav: "09 Visual Consistency",
+          summary:
+            "Color usage, spacing, typography, hierarchy, contrast, visual language, and transitions reduce polish.",
+          analysis:
+            "Visual consistency acts as an indirect trust signal. Small mismatches accumulate into doubt about product maturity.",
+          recommendation:
+            "Normalize spacing, type scale, CTA styling, section rhythm, and transition behavior across the page.",
+        },
+        {
+          id: "finding-10",
+          number: "10",
+          title: "Behavioral Inconsistency",
+          nav: "10 Behavioral Consistency",
+          summary:
+            "Different navigation behaviors and similar controls producing different outcomes create uncertainty.",
+          analysis:
+            "Users learn the interface as they move through it. If repeated controls behave differently, confidence drops.",
+          recommendation:
+            "Audit every navigation and CTA interaction. Similar-looking controls should produce similar kinds of outcomes.",
+        },
+        {
+          id: "finding-11",
+          number: "11",
+          title: "Interface Reliability",
+          nav: "11 Interface Reliability",
+          summary:
+            "Mobile and smaller-screen layout failures weaken comprehension and trust.",
+          analysis:
+            "Responsive quality is part of the product signal. If the page breaks under normal viewport conditions, visitors infer operational fragility.",
+          recommendation:
+            "Define mobile hierarchy deliberately instead of compressing the desktop page. Test all major conversion and trust sections at small widths.",
+        },
+        {
+          id: "finding-12",
+          number: "12",
+          title: "Quality Control Issues",
+          nav: "12 Quality Control",
+          summary:
+            "Broken states, spelling, spacing, overlaps, navigation bugs, and implementation mistakes weaken credibility.",
+          analysis:
+            "Quality issues are especially expensive in regulated or financial contexts because they make users question the unseen parts of the product.",
+          recommendation:
+            "Create a focused QA pass for copy, responsive states, navigation state, button behavior, overlap, and broken links.",
+        },
+      ];
+
+      const homePage = {
+        id: "home",
+        title: "Website Clarity Audit",
+      };
+
+      const staticPages = [
+        {
+          id: "goal",
+          number: "",
+          title: "Goal",
+          subtitle: "",
+          nav: "Goal",
+          group: "Introduction",
+          subnav: ["Relevance", "Trust", "Value", "Clarity"],
+          lead: [
+            "The goal of a landing page is to help the right customer make a decision.",
+            "To do that it must give answers to customers questions.",
+            "What is Crypto12 → Why use Crypto12 → Why trust Crypto12 → Why choose Crypto12.",
+          ],
+          sections: [
+            {
+              label: "Relevance",
+              body: ["Why does this matter to me?"],
+            },
+            {
+              label: "Trust",
+              body: ["Is this company safe, credible and capable?"],
+            },
+            {
+              label: "Value",
+              body: ["Is this worth the cost, effort or commitment?"],
+            },
+            {
+              label: "Clarity",
+              body: ["How easily can I understand the answers to those questions?"],
+            },
+          ],
+        },
+        {
+          id: "signals",
+          number: "",
+          title: "Signals",
+          subtitle: "",
+          nav: "Signals",
+          group: "Introduction",
+          subnav: ["Direct Signals", "Indirect Signals"],
+          lead: [
+            "Relevance, trust, and value are communicated through both direct and indirect signals.",
+            "Direct signals communicate the message.",
+            "Indirect signals influence whether it is believed.",
+          ],
+          sections: [
+            {
+              label: "Direct Signals",
+              body: [
+                "Communicated explicitly through product explanations, pricing, security measures, regulatory approvals, reviews, and partnerships.",
+              ],
+            },
+            {
+              label: "Indirect Signals",
+              body: [
+                "Communicated through perception. Visual consistency, hierarchy, interaction quality, responsiveness, and attention to detail influence how trustworthy, capable, and professional a product feels.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "context",
+          number: "",
+          title: "Context",
+          subtitle: "",
+          nav: "Context",
+          group: "Introduction",
+          subnav: [],
+          lead: [
+            "Crypto12 operates in a category where trust, regulation, security, and education are central to the customer decision.",
+            "Some website elements exist for legal, compliance, or risk-communication reasons. This audit acknowledges those constraints.",
+            "The focus is not to remove necessary information, but to evaluate whether it is presented clearly, at the right moment, and with the right level of emphasis.",
+          ],
+          sections: [],
+        },
+        ...findings.map((finding) => ({
+          id: finding.id,
+          number: finding.number,
+          title: finding.title,
+          subtitle: "",
+          nav: finding.nav,
+          group: "Findings",
+          subnav:
+            finding.id === "finding-01"
+              ? [
+                  "Hero",
+                  "Headline & Value Proposition",
+                  "Competing Elements",
+                  "Call To Action",
+                  "Left-Right Hierarchy",
+                  "Exchange Widget Placement",
+                  "Trust Signals",
+                ]
+              : finding.id === "finding-03"
+              ? [
+                  "Initial Pull",
+                  "Premium Offer",
+                  "Product Experience",
+                  "Interruptions",
+                  "Action Timing",
+                  "Content Prioritization",
+                  "About Us",
+                  "Final Conversion",
+                ]
+              : finding.id === "finding-12"
+              ? [
+                  "Interface Overlaps",
+                  "Navigation State",
+                  "Content Formatting",
+                  "Widget UI",
+                  "Attention to Detail",
+                ]
+              : finding.id === "finding-02"
+              ? [
+                  "Timing",
+                  "Mixed Objectives",
+                  "Information Density",
+                ]
+              : finding.id === "finding-05"
+              ? ["Timing", "Hierarchy"]
+              : finding.id === "finding-06"
+              ? ["Mixed Responsibilities"]
+              : finding.id === "finding-07"
+              ? [
+                  "Visibility",
+                  "Information Density",
+                  "PDF Dependency",
+                  "Value Communication",
+                ]
+              : finding.id === "finding-10"
+              ? [
+                  "Similar Buttons, Different Outcomes",
+                  "Register Flow",
+                  "Navigation Behavior",
+                ]
+              : finding.id === "finding-09"
+              ? ["Observation", "Impact"]
+              : finding.id === "finding-08"
+              ? [
+                  "Conversion Friction",
+                  "Competing Actions",
+                  "Conversion Strategy",
+                ]
+              : finding.id === "finding-04"
+              ? [
+                  "Visibility",
+                  "Regulatory Communication",
+                  "Trust Prioritization",
+                ]
+              : finding.id === "finding-11"
+              ? [
+                  "Mobile Experience",
+                  "Responsive Layout",
+                  "Interface Integrity",
+                ]
+              : ["Finding", "Why it matters", "Recommendation"],
+          lead:
+            finding.id === "finding-01"
+              ? [
+                  "The first screen asks the visitor to process too many competing signals and does not explain the product clearly enough on first contact.",
+                  "As a result, customers must invest additional effort to understand what the product is, why it matters, and why they should continue exploring the website.",
+                ]
+              : finding.id === "finding-02"
+              ? [
+                  "Product explanation appears too late, is mixed with unrelated objectives and dense and difficult to absorb.",
+                  "As a result, customers must spend unnecessary effort understanding the product before they can evaluate it.",
+                ]
+              : finding.id === "finding-09"
+              ? ""
+              : finding.id === "finding-03"
+              ? [
+                  "The website does not follow a clear customer decision journey. Information is introduced at the wrong time, causing customers to repeatedly switch between understanding the product, evaluating trust, and taking action.",
+                  "Instead of building understanding progressively, the page creates unnecessary cognitive friction and makes decision-making harder than it needs to be.",
+                ]
+              : finding.id === "finding-04"
+              ? [
+                  "Crypto12 possesses strong trust assets, including regulatory approval, institutional partnerships, industry memberships, and experienced leadership. However, these assets are not communicated prominently or strategically throughout the customer journey.",
+                  "As a result, some of the website's strongest credibility signals have less influence on customer confidence than they could.",
+                ]
+              : finding.id === "finding-05"
+              ? "The app experience is introduced before the product is clearly understood, and informtion hierarchy is a bit off."
+              : finding.id === "finding-06"
+              ? [
+                  "Several sections combine unrelated responsibilities within the same space, making information harder to understand and evaluate.",
+                  "Instead of strengthening the message, important information competes for attention and reduces overall clarity.",
+                ]
+              : finding.id === "finding-07"
+              ? [
+                  "Information about pricing, fees, and costs is difficult to find, understand, and evaluate throughout the website.",
+                  "Customers are unable to quickly assess the financial implications of using the product, creating uncertainty at a critical stage of the decision process.",
+                ]
+              : finding.id === "finding-08"
+              ? [
+                  "The website concludes with a high-friction contact form while simultaneously introducing a competing call-to-action immediately afterward.",
+                  "Instead of focusing the customer on a single next step, the page divides attention and weakens the final conversion opportunity.",
+                ]
+              : finding.id === "finding-10"
+              ? [
+                  "Several similar actions behave differently across the website.",
+                  "This makes the interface less predictable and weakens trust at important decision points.",
+                ]
+              : finding.id === "finding-11"
+              ? [
+                  "The website does not maintain a consistent level of usability and presentation quality across different screen sizes and devices.",
+                  "A significant portion of visitors are likely to experience additional friction, reduced readability, and interface issues that can negatively affect understanding and trust.",
+                ]
+              : finding.id === "finding-12"
+              ? [
+                  "A number of small interface, content, and implementation issues reduce the overall perception of quality and attention to detail.",
+                  "While individually minor, these issues accumulate throughout the experience and weaken trust, polish, and perceived reliability.",
+                ]
+              : finding.summary,
+          sections:
+            finding.id === "finding-01"
+              ? [
+                  {
+                    label: "Hero",
+                    body: [
+                      "The hero combines headline, exchange input, app promotion, trust badges, market data, and navigation choices in one frame, which diffuses attention and delays relevance.",
+                    ],
+                    image: "initial-pull-hero.png",
+                  },
+                  {
+                    label: "Headline & Value Proposition",
+                    body: [
+                      "The hero does not clearly communicate what Crypto12 is, who it is for, or why it is different.",
+                    ],
+                  },
+                  {
+                    label: "Competing Elements",
+                    body: [
+                      "The hero contains several competing focal points at once: exchange widget, app promotion, regulatory badges, market data, navigation, and headline.",
+                    ],
+                  },
+                  {
+                    label: "Call To Action",
+                    body: [
+                      "There is no clear primary action for a first-time visitor. The app download CTA competes with the broader goal of understanding and exploring the product.",
+                    ],
+                  },
+                  {
+                    label: "Left-Right Hierarchy",
+                    body: [
+                      "The left side communicates the exchange while the right side promotes the mobile app, creating two competing stories within the same screen.",
+                    ],
+                  },
+                  {
+                    label: "Exchange Widget Placement",
+                    body: [
+                      "The exchange widget appears before enough context has been established. It assumes product understanding that has not yet been earned.",
+                    ],
+                  },
+                  {
+                    label: "Trust Signals",
+                    body: [
+                      "Regulatory and institutional trust assets are present, but their role within the hero is unclear and their impact is diluted by surrounding elements.",
+                    ],
+                  },
+                ]
+              : finding.id === "finding-02"
+              ? [
+                  {
+                    label: "Timing",
+                    body: [
+                      "The first meaningful product explanation appears deep into the page.",
+                    ],
+                    image: "product-relevance-timing.png",
+                  },
+                  {
+                    label: "Mixed Objectives",
+                    body: [
+                      "The first substantial product explanation is combined with regulatory communication and supporting information.",
+                    ],
+                    image: "product-relevance-mixed-objectives.png",
+                  },
+                  {
+                    label: "Information Density",
+                    body: [
+                      "The section responsible for product understanding relies on large amounts of text and competing information.",
+                    ],
+                    image: "product-relevance-information-density.png",
+                  },
+                ]
+              : finding.id === "finding-03"
+              ? [
+                  {
+                    label: "Initial Pull",
+                    body: [
+                      "The hero does not establish product relevance strongly enough before introducing multiple competing signals.",
+                    ],
+                    image: "decision-initial-pull.png",
+                  },
+                  {
+                    label: "Premium Offer",
+                    body: [
+                      "A premium offering is introduced before the core product has been sufficiently understood.",
+                    ],
+                    image: "decision-premium-offer.png",
+                  },
+                  {
+                    label: "Product Experience",
+                    body: [
+                      "The website shifts into app and product experience communication before establishing a clear understanding of the product itself.",
+                    ],
+                    image: "decision-product-experience.png",
+                  },
+                  {
+                    label: "Interruptions",
+                    body: [
+                      "Regulatory communication and supporting information interrupt the product narrative instead of supporting it.",
+                    ],
+                    image: "decision-interruptions.png",
+                  },
+                  {
+                    label: "Action Timing",
+                    body: [
+                      "Calls-to-action appear before sufficient context is established, while stronger opportunities to act are underutilized.",
+                    ],
+                    image: "decision-action-timing.png",
+                  },
+                  {
+                    label: "Content Prioritization",
+                    body: [
+                      "Sections such as rates and company information receive disproportionate attention relative to their role in the decision process.",
+                    ],
+                    image: "decision-content-prioritization.png",
+                  },
+                  {
+                    label: "About Us",
+                    body: [
+                      "The About Us section appears too early and receives disproportionate attention relative to its role in the customer decision process.",
+                    ],
+                    image: "decision-about-us.png",
+                  },
+                  {
+                    label: "Final Conversion",
+                    body: [
+                      "The page concludes with a high-effort contact form and educational content rather than a focused conversion path.",
+                    ],
+                    image: "decision-final-conversion.png",
+                  },
+                ]
+              : finding.id === "finding-04"
+              ? [
+                  {
+                    label: "Visibility",
+                    body: [
+                      "Several important trust assets appear relatively late in the page, after significant effort has already been required to understand the product.",
+                      "Customers encounter many supporting details before seeing some of the strongest reasons to trust the company.",
+                    ],
+                    image: "trust-assets-partners.png",
+                  },
+                  {
+                    label: "Regulatory Communication",
+                    body: [
+                      "Regulatory approval is one of Crypto12's strongest trust signals, but much of its communication relies on extensive text and supporting explanations.",
+                      "This increases the effort required to understand what is ultimately a simple and powerful message.",
+                    ],
+                    image: "trust-assets-regulation.png",
+                  },
+                  {
+                    label: "Trust Prioritization",
+                    body: [
+                      "Trust assets appear throughout the website, but they are fragmented across multiple sections and formats.",
+                      "A clearer hierarchy could help the strongest credibility signals work together rather than independently.",
+                    ],
+                    images: [
+                      {
+                        src: "trust-assets-hero-badges.png",
+                        alt: "Trust prioritization hero badges",
+                      },
+                      {
+                        src: "trust-assets-visibility.png",
+                        alt: "About Us trust assets",
+                      },
+                    ],
+                  },
+                ]
+              : finding.id === "finding-08"
+              ? [
+                  {
+                    label: "Conversion Friction",
+                    body: [
+                      "The primary contact form requires a significant amount of effort, including multiple fields, topic selection, attachments, and a written message.",
+                      "For many visitors, this creates a higher commitment threshold than necessary for an initial interaction.",
+                    ],
+                    image: "final-conversion-contact.png",
+                  },
+                  {
+                    label: "Competing Actions",
+                    body: [
+                      "Immediately after the contact form, the website introduces a second conversion path through the downloadable guide.",
+                      "Rather than reinforcing the primary action, it redirects attention away from it.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Conversion Strategy",
+                    body: [
+                      "The final section should focus on a single preferred outcome and make that action as easy as possible to take.",
+                      "Lower-friction actions can encourage engagement while preserving more detailed contact options for customers who need them.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                ]
+              : finding.id === "finding-11"
+              ? [
+                  {
+                    label: "Mobile Experience",
+                    body: [
+                      "The mobile experience falls noticeably behind the desktop version in terms of usability, readability, and overall presentation.",
+                      "Several sections become difficult to navigate, scan, or understand on smaller screens.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Responsive Layout",
+                    body: [
+                      "The current page structure does not adapt consistently across screen sizes.",
+                      "Content hierarchy, spacing, and section composition often lose clarity when viewed on mobile devices.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Interface Integrity",
+                    body: [
+                      "Certain interface components and interactions do not behave as reliably as expected across the experience.",
+                      "This creates moments where the product feels less stable and polished than intended.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                ]
+              : finding.id === "finding-06"
+              ? [
+                  {
+                    label: "Mixed Responsibilities",
+                    body: [
+                      "This section simultaneously communicates regulatory approval, security, trust, product capabilities, and service descriptions.",
+                      "As a result, no single message receives sufficient emphasis, despite each being important on its own.",
+                    ],
+                    image: "information-grouping-mixed-responsibilities.png",
+                  },
+                ]
+              : finding.id === "finding-05"
+              ? [
+                  {
+                    label: "Timing",
+                    body: [
+                      "The app appears too early in the page, before enough product and trust context has been established.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Hierarchy",
+                    body: [
+                      "The section has several competing elements: feature cards, phone mockup, QR code, and promotional text.",
+                    ],
+                    image: "product-experience-hierarchy.png",
+                  },
+                ]
+              : finding.id === "finding-07"
+              ? [
+                  {
+                    label: "Visibility",
+                    body: [
+                      "Pricing and cost-related information receives limited visibility despite being one of the most important factors in customer evaluation.",
+                      "Important value considerations are buried deep within the website rather than communicated clearly and proactively.",
+                    ],
+                    image: "value-visibility.png",
+                  },
+                  {
+                    label: "Information Density",
+                    body: [
+                      "The section relies heavily on dense legal and explanatory text, making key information difficult to identify and understand.",
+                      "Customers must work to extract the information that matters most to them.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "PDF Dependency",
+                    body: [
+                      "Essential pricing information is placed inside downloadable PDF documents rather than being directly accessible on the website.",
+                      "This introduces unnecessary friction and requires customers to leave the decision flow in order to understand the offer.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Value Communication",
+                    body: [
+                      "The website explains many aspects of the product, but does not clearly communicate what the customer can expect to pay and under what conditions.",
+                      "As a result, one of the most important elements of product evaluation remains unclear.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                ]
+              : finding.id === "finding-10"
+              ? [
+                  {
+                    label: "Similar Buttons, Different Outcomes",
+                    body: [
+                      "Similar-looking CTAs lead to different types of actions, making behavior harder to predict.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                  {
+                    label: "Register Flow",
+                    body: [
+                      "The Register button opens a new tab and leads to a different URL.",
+                      "This is especially trust-sensitive because registration should feel continuous and unmistakably connected to Crypto12.",
+                    ],
+                    image: "behavior-register-flow.png",
+                  },
+                  {
+                    label: "Navigation Behavior",
+                    body: [
+                      "Some navigation items move through the current page, while others lead elsewhere.",
+                      "The difference is not always clear before clicking.",
+                    ],
+                    image: "behavior-navigation-behavior.png",
+                  },
+                ]
+              : finding.id === "finding-09"
+              ? [
+                  {
+                    label: "Observation",
+                    body: [
+                      "The visual system lacks consistency across color usage, typography, spacing, hierarchy, and interaction feedback.",
+                    ],
+                  },
+                  {
+                    label: "Impact",
+                    body: [
+                      "The issue weakens indirect trust signaling and increases cognitive effort. While individual inconsistencies may appear minor, together they create a less intentional and less trustworthy experience.",
+                    ],
+                  },
+                  {
+                    label: "Color Consistency",
+                    body: [
+                      "Several blue tones are used throughout the interface without a clear distinction between their roles.",
+                      "A more disciplined color palette would create a stronger visual identity and a more cohesive experience.",
+                    ],
+                    image: "visual-consistency-color-consistency.png",
+                  },
+                  {
+                    label: "Typography & Hierarchy",
+                    body: [
+                      "Text sizing, emphasis, and content density vary significantly between sections, making information harder to scan and prioritize.",
+                    ],
+                  },
+                  {
+                    label: "Content Structure",
+                    body: [
+                      "Sections use different grouping and presentation patterns, creating an inconsistent reading experience as users move through the page.",
+                    ],
+                  },
+                  {
+                    label: "Feedback & Transitions",
+                    body: [
+                      "Interactive elements provide limited visual feedback, transitions, and state changes, reducing perceived responsiveness and polish.",
+                    ],
+                  },
+                ]
+              : finding.id === "finding-12"
+              ? [
+                  {
+                    label: "Interface Overlaps",
+                    body: [
+                      "Interactive elements overlap with surrounding interface components, creating visual conflicts and reducing usability.",
+                    ],
+                    image: "qc-interface-overlaps.png",
+                  },
+                  {
+                    label: "Navigation State",
+                    body: [
+                      "The navigation indicator does not consistently update to reflect the user's current location within the website.",
+                    ],
+                    image: "qc-navigation-state.png",
+                  },
+                  {
+                    label: "Content Formatting",
+                    body: [
+                      "Text formatting, spacing, and paragraph structure are inconsistent across sections, reducing readability and visual rhythm.",
+                    ],
+                    image: "qc-content-formatting.png",
+                  },
+                  {
+                    label: "Widget UI",
+                    body: [
+                      "Some widgets contain alignment, spacing, and presentation issues that make the interface feel less refined than intended.",
+                    ],
+                    image: "qc-widget-ui.png",
+                  },
+                  {
+                    label: "Attention to Detail",
+                    body: [
+                      "Several minor inconsistencies appear throughout the website, suggesting a lack of final quality assurance and review before publication.",
+                    ],
+                    hidePlaceholder: true,
+                  },
+                ]
+              : [
+                  { label: "Finding", body: [finding.summary] },
+                  { label: "Why it matters", body: [finding.analysis] },
+                  { label: "Recommendation", body: [finding.recommendation] },
+                ],
+        })),
+        {
+          id: "final-verdict",
+          number: "",
+          title: "Final Verdict",
+          subtitle: "",
+          nav: "Final Verdict",
+          group: "Conclusions",
+          subnav: [],
+          lead: [
+            "Crypto12 contains most of the signals required to build relevance, trust, and value.",
+            "The challenge is not the absence of information, but how that information is structured, prioritized, and communicated.",
+            "Important signals exist, but many are diluted by weak hierarchy, fragmented trust communication, unclear product explanation, buried value information, and unnecessary friction.",
+            "As a result, the website does not yet guide the customer through a clear decision journey:",
+            "Understand the product → Trust the product → Evaluate the value → Take action.",
+            "The primary opportunity is to restructure the experience around that journey, allowing existing content to communicate with more clarity and impact.",
+          ],
+          sections: [],
+        },
+        {
+          id: "examples",
+          number: "",
+          title: "Example Pages",
+          subtitle: "",
+          nav: "Example Pages",
+          group: "Conclusions",
+          subnav: ["Stripe", "Coinbase", "Goldsend", "Jeton", "Revolut"],
+          lead:
+            "The following examples show how products in the same category approach structure, hierarchy, communication, and user flow.",
+          sections: [
+            {
+              label: "Stripe",
+              body: [
+                "Useful as a reference for information architecture, product explanation, and presenting complex systems without losing clarity.",
+              ],
+              video: "videos/stripe.mp4",
+              previewTime: 0.15,
+              link: "https://stripe.com/",
+            },
+            {
+              label: "Coinbase",
+              body: [
+                "A strong example of direct product framing, clear hierarchy, and early trust signaling around product use and security.",
+              ],
+              video: "videos/coinbase.mp4",
+              previewTime: 0.35,
+              link: "https://www.coinbase.com/",
+            },
+            {
+              label: "Goldsend",
+              body: [
+                "A reference for communicating trust, transfer logic, and service relevance in a category where reassurance is part of the decision.",
+              ],
+              video: "videos/goldsend.mp4",
+              previewTime: 0.15,
+              link: "https://goldsand.fi/",
+            },
+            {
+              label: "Jeton",
+              body: [
+                "Relevant for conversion flow, onboarding emphasis, and how financial-product interfaces can move users toward action with less hesitation.",
+              ],
+              video: "videos/jeton.mp4",
+              previewTime: 0.2,
+              link: "https://www.jeton.com/",
+            },
+            {
+              label: "Revolut",
+              body: [
+                "Shows how category breadth can still feel navigable when value communication, segmentation, and next steps stay visually controlled.",
+              ],
+              video: "videos/revolut.mp4",
+              previewTime: 0.35,
+              link: "https://www.revolut.com/",
+            },
+          ],
+        },
+        {
+          id: "next-steps",
+          number: "",
+          title: "Next Steps",
+          subtitle: "",
+          nav: "Next Steps",
+          group: "Conclusions",
+          subnav: ["Option 1", "Option 2"],
+          lead: [
+            "Based on the findings, I would not recommend fixing the current page through isolated improvements.",
+            "The main opportunity is a full restructuring and redesign of the website, built around a clearer customer decision journey.",
+            "This would allow Crypto12 to communicate more clearly and create a stronger foundation for future expansion.",
+            "To support the next stage of the project, I offer two levels of engagement:",
+          ],
+          sections: [
+            {
+              label: "Actionable Audit",
+              body: [
+                "Includes revised structure, section order, CTA hierarchy, trust communication, content priorities, and mobile recommendations.",
+              ],
+            },
+            {
+              label: "Full Redesign & Implementation",
+              body: [
+                "Restructure, redesign, and support implementation of the website based on the audit.",
+                "Includes everything from the Actionable Audit, plus full page redesign, responsive design, improved content structure, and implementation support.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "principles",
+          number: "",
+          title: "Principles",
+          subtitle: "",
+          nav: "Principles",
+          group: "Methodology",
+          subnav: [
+            "Clarity",
+            "Information Hierarchy",
+            "Progressive Disclosure",
+            "Trust Signaling",
+            "Consistency",
+            "Actionability",
+          ],
+          lead:
+            "While the findings in this audit are specific to Crypto12, they are based on broadly accepted principles of communication, usability, and information architecture.",
+          sections: [
+            {
+              label: "Clarity",
+              body: ["Reducing friction, confusion, and uncertainty."],
+            },
+            {
+              label: "Information Hierarchy",
+              body: ["Presenting information according to importance."],
+            },
+            {
+              label: "Progressive Disclosure",
+              body: ["Introducing information only when it becomes relevant."],
+            },
+            {
+              label: "Trust Signaling",
+              body: ["Communicating credibility through direct and indirect signals."],
+            },
+            {
+              label: "Consistency",
+              body: ["Keeping the visual and behavioral system predictable."],
+            },
+            {
+              label: "Actionability",
+              body: ["Making the next step clear, accessible, and easy to take."],
+            },
+          ],
+        },
+      ];
+
+      const pages = staticPages;
+      const navSections = ["Introduction", "Findings", "Conclusions", "Methodology"];
+      const app = document.querySelector("#app");
+      const nav = document.querySelector("#nav");
+      const sidebar = document.querySelector(".sidebar");
+      const menuButton = document.querySelector("[data-menu]");
+      let currentPage = "goal";
+
+      function buildNav() {
+        nav.innerHTML = navSections
+          .map(
+            (section) => {
+              const sectionPages = pages.filter((page) => page.group === section);
+              const sectionContent = sectionPages
+                .map(
+                  (page) => `
+                    <a class="nav-link" href="#${page.id}" data-page="${page.id}">${page.nav}</a>
+                  `
+                )
+                .join("");
+
+              return `
+                <div class="nav-section nav-section-${section.toLowerCase()}">
+                  <div class="nav-section-title">${section}</div>
+                  ${sectionContent}
+                </div>
+              `;
+            }
+          )
+          .join("");
+      }
+
+      function getPage(id) {
+        if (id === homePage.id) return homePage;
+        return pages.find((page) => page.id === id) || pages[0];
+      }
+
+      function getPageIndex(id) {
+        return pages.findIndex((page) => page.id === id);
+      }
+
+      function sectionId(label) {
+        return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      }
+
+      function pageHeading(page) {
+        return (page.nav || page.title).replace(/^\d{2}\s+/, "");
+      }
+
+      function renderStandardSection(section, extraClass = "") {
+        return `
+          <section class="section${extraClass ? ` ${extraClass}` : ""}" id="${sectionId(
+            section.label
+          )}">
+            <h2 class="section-label">${section.label}</h2>
+            <div class="section-body">
+              ${
+                section.custom ||
+                section.body.map((paragraph) => `<p>${paragraph}</p>`).join("")
+              }
+            </div>
+          </section>
+        `;
+      }
+
+      function renderDetailSection(section) {
+        return `
+          <section class="section" id="${sectionId(section.label)}">
+            <h2 class="section-label">${
+              section.link
+                ? `<a class="section-link" href="${section.link}" target="_blank" rel="noreferrer"><span>${section.label}</span><span class="section-link-arrow" aria-hidden="true">↗</span></a>`
+                : section.label
+            }</h2>
+            <div class="section-body">
+              ${
+                section.custom ||
+                section.body.map((paragraph) => `<p>${paragraph}</p>`).join("")
+              }
+            </div>
+            ${
+              section.image
+                ? `<img class="section-image" src="${section.image}" alt="${section.label}" />`
+                : section.images
+                ? section.images
+                    .map(
+                      (image, index) =>
+                        `<img class="section-image" src="${image.src}" alt="${
+                          image.alt || `${section.label} ${index + 1}`
+                        }" />`
+                    )
+                    .join("")
+                : section.video
+                ? `<div class="section-media"><video src="${section.video}" data-preview-time="${section.previewTime ?? 0.15}" muted loop playsinline preload="auto"></video></div>`
+                : section.hidePlaceholder
+                ? ``
+                : `<div class="section-figure" aria-hidden="true"></div>`
+            }
+          </section>
+        `;
+      }
+
+      function renderLeadSection(page) {
+        if (!page.lead) return "";
+
+        const paragraphs = Array.isArray(page.lead) ? page.lead : [page.lead];
+
+        return `
+          <section class="section visual-intro-section" id="intro">
+            <div class="section-body">
+              ${paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderSections(page) {
+        if (page.id === "finding-01") {
+          const [heroSection, ...rest] = page.sections;
+
+          return `
+            ${renderLeadSection(page)}
+            ${renderDetailSection(heroSection)}
+            ${rest.map((section) => renderStandardSection(section)).join("")}
+          `;
+        }
+
+        if (page.id === "finding-09") {
+          const [observation, impact, ...rest] = page.sections;
+
+          return `
+            <section class="section visual-intro-section" id="${sectionId(
+              observation.label
+            )}">
+              <div class="section-body">
+                ${observation.body.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+                ${impact.body.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+              </div>
+            </section>
+            ${rest.map((section) => renderDetailSection(section)).join("")}
+          `;
+        }
+
+        if (
+          page.group === "Introduction" ||
+          page.id === "final-verdict" ||
+          page.id === "next-steps" ||
+          page.id === "principles"
+        ) {
+          return `
+            ${renderLeadSection(page)}
+            ${page.sections.map((section) => renderStandardSection(section)).join("")}
+          `;
+        }
+
+        return `
+          ${renderLeadSection(page)}
+          ${page.sections.map((section) => renderDetailSection(section)).join("")}
+        `;
+      }
+
+      function initializeVideoHoverState() {
+        document.querySelectorAll(".section-media video").forEach((video) => {
+          if (video.dataset.hoverReady === "true") return;
+          video.dataset.hoverReady = "true";
+
+          const setPreviewFrame = () => {
+            const previewTime = Number(video.dataset.previewTime || "0.15");
+            try {
+              video.pause();
+              video.currentTime = previewTime;
+            } catch {}
+          };
+
+          if (video.readyState >= 1) setPreviewFrame();
+          else video.addEventListener("loadedmetadata", setPreviewFrame, { once: true });
+
+          video.addEventListener("mouseenter", () => {
+            video.play().catch(() => {});
+          });
+
+          video.addEventListener("mouseleave", () => {
+            video.pause();
+          });
+        });
+      }
+
+      function renderHomeContents() {
+        return navSections
+          .map((section) => {
+            const sectionPages = pages.filter((page) => page.group === section);
+            return `
+              <div class="contents-group">
+                <p class="contents-group-title">${section}</p>
+                <div class="contents-links">
+                  ${sectionPages
+                    .map(
+                      (page) =>
+                        `<a href="#${page.id}" data-page="${page.id}">${page.nav}</a>`
+                    )
+                    .join("")}
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderPager(page) {
+        const index = getPageIndex(page.id);
+        const prev = pages[index - 1];
+        const next = pages[index + 1];
+
+        return `
+          <nav class="pager" aria-label="Previous and next pages">
+            <div class="pager-prev">
+              ${
+                prev
+                  ? `<a href="#${prev.id}" data-page="${prev.id}" aria-label="Previous page: ${pageHeading(prev)}"><span class="pager-arrow">←</span><span class="pager-copy"><span class="pager-label">${pageHeading(prev)}</span></span></a>`
+                  : ""
+              }
+            </div>
+            <div class="pager-next">
+              ${
+                next
+                  ? `<a href="#${next.id}" data-page="${next.id}" aria-label="Next page: ${pageHeading(next)}"><span class="pager-copy"><span class="pager-label">${pageHeading(next)}</span></span><span class="pager-arrow">→</span></a>`
+                  : ""
+              }
+            </div>
+          </nav>
+        `;
+      }
+
+      function footer() {
+        return `
+          <footer class="footer">
+            <div class="footer-main">
+              <p class="footer-version">Crypto 12</p>
+              <p class="footer-contact"><a class="footer-email" href="mailto:petar@petar.studio">petar@petar.studio</a></p>
+              <p class="footer-date">June 2026</p>
+            </div>
+          </footer>
+        `;
+      }
+
+      function render(id, sectionLabel) {
+        const page = getPage(id);
+        currentPage = page.id;
+
+        if (page.id === homePage.id) {
+          app.innerHTML = `
+            <article class="page home-page">
+              <div class="top-strip" aria-hidden="true"></div>
+              <section class="hero">
+                <h1 class="hero-title">Website Clarity Audit</h1>
+              </section>
+              <section class="section">
+                <h2 class="section-label">Subject</h2>
+                <div class="section-body">
+                  <p>Crypto12  /  June 2026</p>
+                </div>
+              </section>
+              <section class="section">
+                <h2 class="section-label">Prepared By</h2>
+                <div class="section-body">
+                  <p>Petar Jovanovic</p>
+                  <p>petar@petar.studio</p>
+                </div>
+              </section>
+              <section class="section">
+                <h2 class="section-label">Contents</h2>
+                <div class="section-body">
+                  <div class="contents-panel">
+                    ${renderHomeContents()}
+                  </div>
+                </div>
+              </section>
+              ${footer()}
+            </article>
+          `;
+
+          updateNav(page.id);
+          sidebar.classList.remove("is-open");
+          window.scrollTo({ top: 0 });
+          return;
+        }
+
+        app.innerHTML = `
+          <article class="page page--detail">
+            <div class="top-strip" aria-hidden="true"></div>
+            <section class="hero">
+              <h1 class="hero-title">${pageHeading(page)}${
+                page.subtitle ? `<span>${page.subtitle}</span>` : ""
+              }</h1>
+            </section>
+            ${renderSections(page)}
+            ${renderPager(page)}
+            ${footer()}
+          </article>
+        `;
+
+        updateNav(page.id, sectionLabel);
+        sidebar.classList.remove("is-open");
+        initializeVideoHoverState();
+
+        const target = sectionLabel
+          ? document.getElementById(sectionId(sectionLabel))
+          : null;
+
+        if (target) target.scrollIntoView({ block: "start" });
+        else window.scrollTo({ top: 0 });
+      }
+
+      function updateNav(pageId) {
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.setAttribute(
+            "aria-current",
+            link.dataset.page === pageId ? "page" : "false"
+          );
+        });
+      }
+
+      function go(pageId, sectionLabel) {
+        history.pushState({ pageId, sectionLabel }, "", `#${pageId}`);
+        render(pageId, sectionLabel);
+      }
+
+      document.addEventListener("click", (event) => {
+        const topLink = event.target.closest("[data-top]");
+        if (topLink) {
+          event.preventDefault();
+          window.scrollTo({ top: 0 });
+          return;
+        }
+
+        const pageLink = event.target.closest("[data-page]");
+        if (pageLink) {
+          event.preventDefault();
+          go(pageLink.dataset.page, pageLink.dataset.section);
+        }
+      });
+
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("is-open");
+      });
+
+      sidebar.addEventListener(
+        "wheel",
+        (event) => {
+          if (nav.scrollHeight > nav.clientHeight) {
+            nav.scrollTop += event.deltaY;
+          }
+          event.preventDefault();
+        },
+        { passive: false }
+      );
+
+      window.addEventListener("popstate", (event) => {
+        const state = event.state || {};
+        render(state.pageId || "home", state.sectionLabel);
+      });
+
+      buildNav();
+      render(location.hash.replace("#", "") || "home");
+    </script>
+  </body>
+</html>
